@@ -1,19 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Search, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { validateYouTubeUrl } from '../utils/urlValidator';
+import { ERROR_MESSAGES } from '../utils/constants';
 
 const UrlInput = ({ onValidUrl, isLoading }) => {
   const [url, setUrl] = useState('');
   const [error, setError] = useState(null);
   const [isValid, setIsValid] = useState(false);
-
-  const errorMessages = {
-    INPUT_EMPTY: 'Masukkan URL YouTube terlebih dahulu.',
-    NOT_A_URL: 'Input bukan URL. Contoh: https://youtube.com/watch?v=xxxxx',
-    NOT_YOUTUBE: 'Hanya URL YouTube yang didukung saat ini.',
-    NO_VIDEO_ID: 'URL tidak mengarah ke video. Pastikan URL mengandung ?v= atau berbentuk youtu.be/xxxxx',
-    INVALID_ID_FORMAT: 'Format ID video tidak valid. Periksa kembali URL Anda.',
-  };
 
   useEffect(() => {
     if (url.trim() === '') {
@@ -27,7 +20,7 @@ const UrlInput = ({ onValidUrl, isLoading }) => {
       setError(null);
       setIsValid(true);
     } else {
-      setError(errorMessages[result.error] || 'URL tidak valid');
+      setError(ERROR_MESSAGES[result.error] || 'URL tidak valid');
       setIsValid(false);
     }
   }, [url]);

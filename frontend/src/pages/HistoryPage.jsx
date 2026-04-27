@@ -6,7 +6,9 @@ import ThemeToggle from '../components/ThemeToggle';
 
 const HistoryPage = () => {
   const navigate = useNavigate();
-  const { history, deleteFromHistory, setResult } = useAppStore();
+  const history = useAppStore((s) => s.history);
+  const deleteFromHistory = useAppStore((s) => s.deleteFromHistory);
+  const setResult = useAppStore((s) => s.setResult);
 
   const handleRevisit = (item) => {
     setResult(item);
@@ -55,7 +57,7 @@ const HistoryPage = () => {
                   </div>
                 </div>
 
-                <div className="flex-1 min-w-0">
+                <div className="flex-1 min-w-0 text-left">
                   <h3 className="font-bold text-lg line-clamp-1 group-hover:text-blue-600 transition-colors">
                     {item.title}
                   </h3>

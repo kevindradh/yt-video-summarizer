@@ -4,10 +4,9 @@ const helmet = require('helmet');
 const { rateLimit } = require('express-rate-limit');
 const env = require('./config/env');
 const errorHandler = require('./middleware/errorHandler');
-const summarizeRoutes = require('./routes/summarize');
+const { router: summarizeRoutes } = require('./routes/summarize');
 
 const app = express();
-const PORT = env.PORT;
 
 // Security Middleware
 app.use(helmet());
@@ -23,6 +22,7 @@ const limiter = rateLimit({
   limit: 100, // Limit each IP to 100 requests per window
   standardHeaders: 'draft-8',
   legacyHeaders: false,
+  skip: () => process.env.NODE_ENV === 'test', // Skip in test mode
   message: {
     success: false,
     error: {
@@ -46,6 +46,11 @@ app.use('/api/summarize', limiter, summarizeRoutes);
 // Error Handling (Must be last)
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server is running on port ${PORT} in ${env.NODE_ENV} mode`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  const PORT = env.PORT || 3001;
+  app.listen(PORT, () => {
+    console.log(`🚀 Server is running on port ${PORT} in ${env.NODE_ENV} mode`);
+  });
+}
+
+module.exports = app;

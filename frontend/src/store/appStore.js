@@ -34,6 +34,7 @@ export const useAppStore = create(
       setResult: (result) => set({ result, status: 'success' }),
       setError: (error) => set({ error, status: 'error' }),
       setCurrentStep: (step) => set({ currentStep: step }),
+      setProgress: (progress) => set({ progress }),
       addToHistory: (result) => set((s) => {
         // Prevent duplicates in history
         const filteredHistory = s.history.filter(item => item.videoId !== result.videoId);

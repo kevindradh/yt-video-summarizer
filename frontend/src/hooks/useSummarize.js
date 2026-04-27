@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useAppStore } from '../store/appStore';
 import axios from 'axios';
 
@@ -9,23 +10,32 @@ const apiClient = axios.create({
 });
 
 export function useSummarize() {
-  const { setStatus, setResult, setError, setCurrentStep, options, addToHistory } = useAppStore();
+  const setStatus = useAppStore((s) => s.setStatus);
+  const setResult = useAppStore((s) => s.setResult);
+  const setError = useAppStore((s) => s.setError);
+  const setCurrentStep = useAppStore((s) => s.setCurrentStep);
+  const setProgress = useAppStore((s) => s.setProgress);
+  const addToHistory = useAppStore((s) => s.addToHistory);
+  const options = useAppStore((s) => s.options);
 
-  const summarize = async (url) => {
+  const summarize = useCallback(async (url) => {
     setStatus('loading');
     setCurrentStep('validating');
+    setProgress(10);
 
     try {
-      // Small artificial delays to show progress steps to the user (as per PRD Section 7.2)
-      await new Promise(r => setTimeout(r, 800));
+      await new Promise(r => setTimeout(r, 600));
       
       setCurrentStep('fetching');
-      await new Promise(r => setTimeout(r, 1000));
+      setProgress(30);
+      await new Promise(r => setTimeout(r, 800));
       
       setCurrentStep('transcribing');
-      await new Promise(r => setTimeout(r, 1200));
+      setProgress(50);
+      await new Promise(r => setTimeout(r, 1000));
       
       setCurrentStep('processing');
+      setProgress(70);
       
       const response = await apiClient.post('/api/summarize', {
         url,
@@ -34,6 +44,8 @@ export function useSummarize() {
       });
 
       if (response.data.success) {
+        setProgress(100);
+        await new Promise(r => setTimeout(r, 400));
         setResult(response.data.data);
         addToHistory(response.data.data);
       } else {
@@ -48,8 +60,9 @@ export function useSummarize() {
         retryable: true,
       };
       setError(errorData);
+      setProgress(0);
     }
-  };
+  }, [setStatus, setResult, setError, setCurrentStep, setProgress, addToHistory, options]);
 
   return { summarize };
 }

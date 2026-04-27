@@ -12,13 +12,11 @@ import { Play, Globe, FileText, History } from 'lucide-react';
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const { status, options, inputUrl } = useAppStore(
-    useShallow((s) => ({
-      status: s.status,
-      options: s.options,
-      inputUrl: s.inputUrl
-    }))
-  );
+  
+  // Atomic selectors for better stability in React 19
+  const status = useAppStore((s) => s.status);
+  const options = useAppStore((s) => s.options);
+  const inputUrl = useAppStore((s) => s.inputUrl);
 
   const setOptions = useAppStore((s) => s.setOptions);
   const setInputUrl = useAppStore((s) => s.setInputUrl);
