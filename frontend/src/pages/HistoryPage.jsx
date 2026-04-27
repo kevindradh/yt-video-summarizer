@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../store/appStore';
 import { ArrowLeft, Trash2, ExternalLink, Play, Clock } from 'lucide-react';
+import ThemeToggle from '../components/ThemeToggle';
 
 const HistoryPage = () => {
   const navigate = useNavigate();
@@ -13,15 +14,18 @@ const HistoryPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex flex-col items-center px-4 py-12">
-      <header className="w-full max-w-4xl flex items-center mb-12">
-        <button 
-          onClick={() => navigate('/')}
-          className="p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full transition-colors mr-4"
-        >
-          <ArrowLeft size={24} />
-        </button>
-        <h1 className="text-2xl font-bold">Riwayat Ringkasan</h1>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex flex-col items-center px-4 py-12 transition-colors">
+      <header className="w-full max-w-4xl flex items-center justify-between mb-12">
+        <div className="flex items-center">
+          <button 
+            onClick={() => navigate('/')}
+            className="p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full transition-colors mr-4"
+          >
+            <ArrowLeft size={24} />
+          </button>
+          <h1 className="text-2xl font-bold">Riwayat Ringkasan</h1>
+        </div>
+        <ThemeToggle />
       </header>
 
       <main className="w-full max-w-4xl">

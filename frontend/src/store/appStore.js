@@ -20,10 +20,14 @@ export const useAppStore = create(
       result: null,
       error: null,
 
+      // UI state
+      theme: 'system', // 'light' | 'dark' | 'system'
+      
       // History state
       history: [],
 
       // Actions
+      setTheme: (theme) => set({ theme }),
       setInputUrl: (url) => set({ inputUrl: url }),
       setOptions: (opts) => set((s) => ({ options: { ...s.options, ...opts } })),
       setStatus: (status) => set({ status }),
@@ -43,7 +47,10 @@ export const useAppStore = create(
     {
       name: 'yt-summarizer-storage', // key in localStorage
       storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({ history: state.history }), // only persist history
+      partialize: (state) => ({ 
+        history: state.history,
+        theme: state.theme 
+      }), // Persist history and theme
     }
   )
 );

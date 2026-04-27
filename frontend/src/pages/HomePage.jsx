@@ -7,6 +7,7 @@ import UrlInput from '../components/UrlInput';
 import LoadingState from '../components/LoadingState';
 import ErrorAlert from '../components/ErrorAlert';
 import SummaryCard from '../components/SummaryCard';
+import ThemeToggle from '../components/ThemeToggle';
 import { Play, Globe, FileText, History } from 'lucide-react';
 
 const HomePage = () => {
@@ -36,7 +37,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gray-50 text-gray-900 flex flex-col items-center px-4 py-12">
+    <div className="min-h-screen w-full bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex flex-col items-center px-4 py-12 transition-colors">
       {/* Header */}
       <header className="w-full max-w-5xl flex justify-between items-center mb-16">
         <div className="flex items-center space-x-2 cursor-pointer" onClick={() => navigate('/')}>
@@ -45,13 +46,17 @@ const HomePage = () => {
           </div>
           <h1 className="text-xl font-bold tracking-tight">YouTube Summarizer</h1>
         </div>
-        <button 
-          onClick={() => navigate('/history')}
-          className="flex items-center space-x-2 px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-lg transition-colors"
-        >
-          <History size={18} />
-          <span>History</span>
-        </button>
+        
+        <div className="flex items-center space-x-4">
+          <ThemeToggle />
+          <button 
+            onClick={() => navigate('/history')}
+            className="flex items-center space-x-2 px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg transition-colors"
+          >
+            <History size={18} />
+            <span>History</span>
+          </button>
+        </div>
       </header>
 
 
@@ -73,7 +78,7 @@ const HomePage = () => {
               <div className="flex items-center space-x-3">
                 <Globe size={16} className="text-gray-400" />
                 <span className="font-medium text-gray-500">Bahasa Output:</span>
-                <div className="flex bg-gray-200 p-1 rounded-lg">
+                <div className="flex bg-gray-200 dark:bg-gray-800 p-1 rounded-lg transition-colors">
                   <button
                     onClick={() => setOptions({ outputLanguage: 'id' })}
                     className={`btn-toggle ${options.outputLanguage === 'id' ? 'active' : ''}`}
@@ -92,7 +97,7 @@ const HomePage = () => {
               <div className="flex items-center space-x-3">
                 <FileText size={16} className="text-gray-400" />
                 <span className="font-medium text-gray-500">Panjang:</span>
-                <div className="flex bg-gray-200 p-1 rounded-lg">
+                <div className="flex bg-gray-200 dark:bg-gray-800 p-1 rounded-lg transition-colors">
                   {['short', 'normal', 'detailed'].map((len) => (
                     <button
                       key={len}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAppStore } from '../store/appStore';
-import { Clock, Calendar, User, Copy, Check, Share2, Play, List, FileText } from 'lucide-react';
+import { Clock, Calendar, User, Copy, Check, Play, List, FileText, FileDown } from 'lucide-react';
+import { jsPDF } from 'jspdf';
 
 const SummaryCard = () => {
   const { result, reset } = useAppStore();
@@ -13,6 +14,64 @@ const SummaryCard = () => {
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleDownloadPDF = () => {
+    const doc = new jsPDF();
+    const margin = 20;
+    const width = 170;
+    let y = 20;
+
+    // Header
+    doc.setFontSize(16);
+    doc.setFont('helvetica', 'bold');
+    const titleLines = doc.splitTextToSize(result.title, width);
+    doc.text(titleLines, margin, y);
+    y += (titleLines.length * 7) + 10;
+
+    // Metadata
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`Channel: ${result.channel}`, margin, y);
+    y += 6;
+    doc.text(`URL: https://youtube.com/watch?v=${result.videoId}`, margin, y);
+    y += 10;
+
+    // Summary Section
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Ringkasan:', margin, y);
+    y += 8;
+
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal');
+    const summaryLines = doc.splitTextToSize(result.summary, width);
+    doc.text(summaryLines, margin, y);
+    y += (summaryLines.length * 6) + 10;
+
+    // Key Points Section
+    if (y > 250) { doc.addPage(); y = 20; }
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Poin Penting:', margin, y);
+    y += 8;
+
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal');
+    result.keyPoints.forEach((p, i) => {
+      const pointText = `${i + 1}. ${p.point}`;
+      const pointLines = doc.splitTextToSize(pointText, width);
+      
+      if (y + (pointLines.length * 6) > 280) {
+        doc.addPage();
+        y = 20;
+      }
+      
+      doc.text(pointLines, margin, y);
+      y += (pointLines.length * 6) + 2;
+    });
+
+    doc.save(`${result.title.replace(/[^\w\s]/gi, '')}_summary.pdf`);
   };
 
   return (
@@ -68,13 +127,24 @@ const SummaryCard = () => {
                 <FileText className="text-blue-600 w-5 h-5" />
                 <h4 className="text-lg font-bold text-gray-900 dark:text-white">Ringkasan Utama</h4>
               </div>
-              <button 
-                onClick={handleCopy}
-                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors text-gray-500"
-                title="Copy to clipboard"
-              >
-                {copied ? <Check size={18} className="text-green-500" /> : <Copy size={18} />}
-              </button>
+              
+              <div className="flex items-center space-x-2">
+                <button 
+                  onClick={handleCopy}
+                  className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors text-gray-500"
+                  title="Copy to clipboard"
+                >
+                  {copied ? <Check size={18} className="text-green-500" /> : <Copy size={18} />}
+                </button>
+                <button 
+                  onClick={handleDownloadPDF}
+                  className="flex items-center space-x-2 px-3 py-2 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/50 rounded-lg transition-colors text-sm font-medium"
+                  title="Download PDF"
+                >
+                  <FileDown size={18} />
+                  <span>Download PDF</span>
+                </button>
+              </div>
             </div>
             <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line text-lg">
               {result.summary}
