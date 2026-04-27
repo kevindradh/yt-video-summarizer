@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../store/appStore';
 import { useShallow } from 'zustand/react/shallow';
 import { useSummarize } from '../hooks/useSummarize';
@@ -9,6 +10,7 @@ import SummaryCard from '../components/SummaryCard';
 import { Play, Globe, FileText, History } from 'lucide-react';
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const { status, options, inputUrl } = useAppStore(
     useShallow((s) => ({
       status: s.status,
@@ -16,10 +18,10 @@ const HomePage = () => {
       inputUrl: s.inputUrl
     }))
   );
-  
+
   const setOptions = useAppStore((s) => s.setOptions);
   const setInputUrl = useAppStore((s) => s.setInputUrl);
-  
+
   const { summarize } = useSummarize();
 
   const handleSummarize = (url) => {
@@ -37,17 +39,21 @@ const HomePage = () => {
     <div className="min-h-screen w-full bg-gray-50 text-gray-900 flex flex-col items-center px-4 py-12">
       {/* Header */}
       <header className="w-full max-w-5xl flex justify-between items-center mb-16">
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 cursor-pointer" onClick={() => navigate('/')}>
           <div className="bg-red-600 p-2 rounded-lg text-white">
             <Play size={24} fill="currentColor" />
           </div>
           <h1 className="text-xl font-bold tracking-tight">YouTube Summarizer</h1>
         </div>
-        <button className="flex items-center space-x-2 px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-lg transition-colors">
+        <button 
+          onClick={() => navigate('/history')}
+          className="flex items-center space-x-2 px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-lg transition-colors"
+        >
           <History size={18} />
           <span>History</span>
         </button>
       </header>
+
 
       {/* Main Content */}
       <main className="w-full max-w-5xl flex flex-col items-center">
