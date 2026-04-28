@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Search, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { validateYouTubeUrl } from '../utils/urlValidator';
 import { ERROR_MESSAGES } from '../utils/constants';
@@ -50,7 +50,7 @@ const UrlInput = ({ onValidUrl, isLoading }) => {
                 ? 'border-red-500 focus:ring-red-200' 
                 : isValid 
                   ? 'border-green-500 focus:ring-green-200'
-                  : 'border-gray-200 dark:border-gray-700 focus:ring-blue-200 focus:border-blue-500'
+                  : 'border-gray-200 dark:border-gray-700 focus:ring-red-200 focus:border-red-500'
             }`}
           />
           <button
@@ -58,7 +58,7 @@ const UrlInput = ({ onValidUrl, isLoading }) => {
             disabled={!isValid || isLoading}
             className={`absolute right-2 px-6 py-2.5 rounded-lg font-medium transition-all ${
               isValid && !isLoading
-                ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md'
+                ? 'bg-red-600 hover:bg-red-700 text-white shadow-md'
                 : 'bg-gray-200 dark:bg-gray-700 text-gray-400 cursor-not-allowed'
             }`}
           >

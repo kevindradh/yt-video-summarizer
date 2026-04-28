@@ -1,11 +1,12 @@
-import React from 'react';
+import { useState } from 'react';
 import { useAppStore } from '../store/appStore';
-import { Clock, Calendar, User, Copy, Check, Play, List, FileText, FileDown } from 'lucide-react';
+import { User, Calendar, Copy, Check, Play, List, FileText, FileDown } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 
 const SummaryCard = () => {
-  const { result, reset } = useAppStore();
-  const [copied, setCopied] = React.useState(false);
+  const result = useAppStore((s) => s.result);
+  const reset = useAppStore((s) => s.reset);
+  const [copied, setCopied] = useState(false);
 
   if (!result) return null;
 
@@ -106,11 +107,11 @@ const SummaryCard = () => {
           
           <div className="grid grid-cols-2 gap-4">
             <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
-              <User size={16} className="mr-2 text-blue-500" />
+              <User size={16} className="mr-2 text-red-500" />
               <span className="truncate">{result.channel}</span>
             </div>
             <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
-              <Calendar size={16} className="mr-2 text-blue-500" />
+              <Calendar size={16} className="mr-2 text-red-500" />
               <span>{new Date(result.publishedAt).toLocaleDateString('id-ID')}</span>
             </div>
           </div>
@@ -124,21 +125,21 @@ const SummaryCard = () => {
           <section className="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center space-x-2">
-                <FileText className="text-blue-600 w-5 h-5" />
+                <FileText className="text-red-600 w-5 h-5" />
                 <h4 className="text-lg font-bold text-gray-900 dark:text-white">Ringkasan Utama</h4>
               </div>
               
               <div className="flex items-center space-x-2">
                 <button 
                   onClick={handleCopy}
-                  className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors text-gray-500"
+                  className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors text-gray-500"
                   title="Copy to clipboard"
                 >
                   {copied ? <Check size={18} className="text-green-500" /> : <Copy size={18} />}
                 </button>
                 <button 
                   onClick={handleDownloadPDF}
-                  className="flex items-center space-x-2 px-3 py-2 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/50 rounded-lg transition-colors text-sm font-medium"
+                  className="flex items-center space-x-2 px-3 py-2 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/50 rounded-lg transition-colors text-sm font-medium"
                   title="Download PDF"
                 >
                   <FileDown size={18} />
@@ -154,7 +155,7 @@ const SummaryCard = () => {
 
         {/* Key Points Sidebar */}
         <div className="space-y-8">
-          <section className="bg-blue-600 text-white p-8 rounded-3xl shadow-lg">
+          <section className="bg-red-600 text-white p-8 rounded-3xl shadow-lg">
             <div className="flex items-center space-x-2 mb-6">
               <List className="w-5 h-5" />
               <h4 className="text-lg font-bold">Poin Penting</h4>
@@ -162,7 +163,7 @@ const SummaryCard = () => {
             <ul className="space-y-4">
               {result.keyPoints.map((point, idx) => (
                 <li key={idx} className="flex items-start space-x-3 text-sm bg-white/10 p-3 rounded-xl backdrop-blur-sm border border-white/10 text-left">
-                  <span className="flex-shrink-0 w-6 h-6 bg-white text-blue-600 rounded-full flex items-center justify-center font-bold text-xs">
+                  <span className="flex-shrink-0 w-6 h-6 bg-white text-red-600 rounded-full flex items-center justify-center font-bold text-xs">
                     {idx + 1}
                   </span>
                   <p className="leading-snug">{point.point}</p>

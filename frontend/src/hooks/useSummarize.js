@@ -3,7 +3,8 @@ import { useAppStore } from '../store/appStore';
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: 'http://localhost:3001',
+  // Use relative path so Nginx proxy handles the request to the backend container
+  baseURL: window.location.origin, 
   headers: {
     'Content-Type': 'application/json',
   },

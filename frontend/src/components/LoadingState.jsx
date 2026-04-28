@@ -1,10 +1,10 @@
-import React from 'react';
 import { useAppStore } from '../store/appStore';
 import { Loader2, CheckCircle2 } from 'lucide-react';
 import { LOADING_STEPS } from '../utils/constants';
 
 const LoadingState = () => {
-  const { currentStep, progress } = useAppStore();
+  const currentStep = useAppStore((s) => s.currentStep);
+  const progress = useAppStore((s) => s.progress);
 
   const getStepIndex = (stepId) => LOADING_STEPS.findIndex(s => s.id === stepId);
   const currentIndex = getStepIndex(currentStep);
@@ -35,10 +35,10 @@ const LoadingState = () => {
                 strokeDasharray={276}
                 strokeDashoffset={276 - (276 * progress) / 100}
                 strokeLinecap="round"
-                className="text-blue-600 transition-all duration-700 ease-out"
+                className="text-red-600 transition-all duration-700 ease-out"
               />
             </svg>
-            <div className="absolute inset-0 flex items-center justify-center font-bold text-xl text-blue-600">
+            <div className="absolute inset-0 flex items-center justify-center font-bold text-xl text-red-600">
               {progress}%
             </div>
           </div>
@@ -61,7 +61,7 @@ const LoadingState = () => {
               return (
                 <div key={step.id} className="flex items-center space-x-6 relative z-10">
                   <div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center ${
-                    isCompleted ? 'bg-green-500' : isActive ? 'bg-blue-600 animate-pulse' : 'bg-gray-200 dark:bg-gray-700'
+                    isCompleted ? 'bg-green-500' : isActive ? 'bg-red-600 animate-pulse' : 'bg-gray-200 dark:bg-gray-700'
                   }`}>
                     {isCompleted ? (
                       <CheckCircle2 className="w-4 h-4 text-white" />
@@ -72,7 +72,7 @@ const LoadingState = () => {
                     )}
                   </div>
                   <span className={`text-base font-semibold transition-colors duration-300 ${
-                    isActive ? 'text-blue-600 dark:text-blue-400' : 
+                    isActive ? 'text-red-600 dark:text-red-400' : 
                     isCompleted ? 'text-gray-900 dark:text-gray-100' : 
                     'text-gray-400'
                   }`}>

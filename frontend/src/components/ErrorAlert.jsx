@@ -1,15 +1,15 @@
-import React from 'react';
 import { useAppStore } from '../store/appStore';
-import { AlertTriangle, RefreshCw, XCircle } from 'lucide-react';
+import { RefreshCw, XCircle } from 'lucide-react';
 
 const ErrorAlert = ({ onRetry }) => {
-  const { error, reset } = useAppStore();
+  const error = useAppStore((s) => s.error);
+  const reset = useAppStore((s) => s.reset);
 
   if (!error) return null;
 
   return (
     <div className="w-full max-w-2xl mx-auto mt-12 p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl shadow-sm animate-in fade-in slide-in-from-top-4 duration-300">
-      <div className="flex items-start space-x-4">
+      <div className="flex items-start space-x-4 text-left">
         <div className="flex-shrink-0">
           <XCircle className="w-6 h-6 text-red-600 dark:text-red-400" />
         </div>

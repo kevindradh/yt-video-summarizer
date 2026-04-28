@@ -1,4 +1,3 @@
-import React from 'react';
 import { Sun, Moon, Monitor } from 'lucide-react';
 import { useAppStore } from '../store/appStore';
 
@@ -20,7 +19,7 @@ const ThemeToggle = () => {
           onClick={() => setTheme(t.id)}
           className={`p-2 rounded-lg transition-all flex items-center space-x-1 ${
             theme === t.id 
-              ? 'bg-white dark:bg-gray-700 shadow-sm text-blue-600 dark:text-blue-400' 
+              ? 'bg-white dark:bg-gray-700 shadow-sm text-red-600 dark:text-red-400' 
               : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
           }`}
           title={`Switch to ${t.label} mode`}

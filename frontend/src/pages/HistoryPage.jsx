@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../store/appStore';
 import { ArrowLeft, Trash2, ExternalLink, Play, Clock } from 'lucide-react';
@@ -47,7 +46,7 @@ const HistoryPage = () => {
             {history.map((item) => (
               <div 
                 key={item.videoId}
-                className="card-container p-4 flex items-center group hover:border-blue-300 dark:hover:border-blue-700 transition-all cursor-pointer"
+                className="card-container p-4 flex items-center group hover:border-red-300 dark:hover:border-red-700 transition-all cursor-pointer"
                 onClick={() => handleRevisit(item)}
               >
                 <div className="relative w-32 h-20 flex-shrink-0 rounded-xl overflow-hidden mr-6 shadow-sm">
@@ -58,7 +57,7 @@ const HistoryPage = () => {
                 </div>
 
                 <div className="flex-1 min-w-0 text-left">
-                  <h3 className="font-bold text-lg line-clamp-1 group-hover:text-blue-600 transition-colors">
+                  <h3 className="font-bold text-lg line-clamp-1 group-hover:text-red-600 transition-colors">
                     {item.title}
                   </h3>
                   <div className="flex items-center text-sm text-gray-500 space-x-4 mt-1">

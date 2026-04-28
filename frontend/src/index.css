@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 }
@@ -31,7 +31,7 @@ body {
   }
   
   .btn-toggle.active {
-    @apply bg-white dark:bg-gray-700 shadow-sm text-blue-600 dark:text-blue-400 font-medium;
+    @apply bg-white dark:bg-gray-700 shadow-sm text-red-600 dark:text-red-400 font-medium;
   }
 
   .card-container {

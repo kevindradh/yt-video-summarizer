@@ -1,7 +1,5 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../store/appStore';
-import { useShallow } from 'zustand/react/shallow';
 import { useSummarize } from '../hooks/useSummarize';
 import UrlInput from '../components/UrlInput';
 import LoadingState from '../components/LoadingState';
@@ -13,7 +11,6 @@ import { Play, Globe, FileText, History } from 'lucide-react';
 const HomePage = () => {
   const navigate = useNavigate();
   
-  // Atomic selectors for better stability in React 19
   const status = useAppStore((s) => s.status);
   const options = useAppStore((s) => s.options);
   const inputUrl = useAppStore((s) => s.inputUrl);
@@ -39,7 +36,7 @@ const HomePage = () => {
       {/* Header */}
       <header className="w-full max-w-5xl flex justify-between items-center mb-16">
         <div className="flex items-center space-x-2 cursor-pointer" onClick={() => navigate('/')}>
-          <div className="bg-red-600 p-2 rounded-lg text-white">
+          <div className="bg-red-600 p-2 rounded-lg text-white shadow-sm">
             <Play size={24} fill="currentColor" />
           </div>
           <h1 className="text-xl font-bold tracking-tight">YouTube Summarizer</h1>
@@ -62,10 +59,11 @@ const HomePage = () => {
       <main className="w-full max-w-5xl flex flex-col items-center">
         {status === 'idle' && (
           <div className="w-full text-center">
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-blue-600">
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-red-600">
               Ringkas Video YouTube dalam Detik
             </h2>
-            <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+
+            <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
               Dapatkan inti konten video, poin-poin kunci, dan ringkasan terstruktur tanpa perlu menonton seluruh video.
             </p>
 
@@ -108,6 +106,23 @@ const HomePage = () => {
                 </div>
               </div>
             </div>
+
+            {/* How it works */}
+            <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
+              {[
+                { step: '1', title: 'Paste URL', desc: 'Masukkan link video YouTube yang ingin Anda ringkas.' },
+                { step: '2', title: 'AI Memproses', desc: 'Kami mengambil transkrip dan memprosesnya menggunakan AI.' },
+                { step: '3', title: 'Dapatkan Hasil', desc: 'Baca ringkasan dan poin-poin kunci dalam hitungan detik.' },
+              ].map((item) => (
+                <div key={item.step} className="p-8 bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-shadow">
+                  <div className="w-10 h-10 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-full flex items-center justify-center font-bold mb-4 mx-auto text-lg">
+                    {item.step}
+                  </div>
+                  <h3 className="font-bold mb-2 text-lg">{item.title}</h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
@@ -117,7 +132,7 @@ const HomePage = () => {
       </main>
 
       <footer className="mt-auto pt-20 text-gray-400 text-sm">
-        &copy; 2026 YouTube Summarizer.
+        &copy; 2026 YouTube Summarizer. Made with ❤️ for efficiency.
       </footer>
     </div>
   );
