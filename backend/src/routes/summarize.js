@@ -73,7 +73,6 @@ router.post('/', async (req, res, next) => {
       finalKeyPoints = aiResult.keyPoints;
     } else {
       // Recursive/Segmented processing for long videos
-      console.log(`Processing ${transcriptChunks.length} segments for long video...`);
       const partialSummaries = [];
       
       for (let i = 0; i < transcriptChunks.length; i++) {

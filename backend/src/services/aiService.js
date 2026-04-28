@@ -53,34 +53,14 @@ Buat ringkasan dan key points sesuai instruksi dalam format JSON.`;
       },
     });
 
-    // Ollama returns chat response in response.data.message.content
-    const contentText = response.data.message.content;
-    const content = JSON.parse(contentText);
-    
+    const content = JSON.parse(response.data.message.content);
     return SummaryResponseSchema.parse(content);
   } catch (error) {
-    console.error('[Ollama AI Service Error]:', error.message);
-    if (error.response) {
-      console.error('[Ollama AI Error Data]:', error.response.data);
-    }
-    
-    // Fallback Mock for testing purposes
-    if (process.env.NODE_ENV === 'development') {
-      console.log('Using fallback mock response for development...');
-      return {
-        summary: `[AXIOS OLLAMA MOCK] Video: "${title}". Muncul karena kendala teknis pada Ollama. URL: ${OLLAMA_BASE_URL}. Error: ${error.message}`,
-        keyPoints: [
-          { point: "Poin pertama tentang latar belakang topik video." },
-          { point: "Poin kedua mengenai inti pembahasan utama." },
-          { point: "Poin ketiga tentang kesimpulan dan saran praktis." }
-        ]
-      };
-    }
-
+    // Keep error logging for actual failures as per Section 13.1
     throw { 
       code: 'AI_SERVICE_ERROR', 
       httpStatus: 502, 
-      message: error.message || 'Gagal memproses ringkasan menggunakan Ollama AI.' 
+      message: error.message || 'Gagal memproses ringkasan menggunakan AI.' 
     };
   }
 }

@@ -52,7 +52,6 @@ export function useSummarize() {
         throw response.data.error;
       }
     } catch (err) {
-      console.error('[Summarize Hook Error]:', err);
       const errorData = err.response?.data?.error || err || {
         code: 'UNKNOWN_ERROR',
         message: 'Terjadi kesalahan tidak terduga.',
