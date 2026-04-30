@@ -45,7 +45,7 @@ const UrlInput = ({ onValidUrl, isLoading }) => {
             onChange={(e) => setUrl(e.target.value)}
             placeholder="Paste YouTube URL here..."
             disabled={isLoading}
-            className={`w-full pl-12 pr-32 py-4 bg-white dark:bg-gray-800 border-2 rounded-xl shadow-sm focus:outline-none focus:ring-2 transition-all ${
+            className={`w-full pl-12 pr-32 py-4 bg-white dark:bg-gray-800 border-2 rounded-xl focus:outline-none focus:ring-2 transition-all ${
               error 
                 ? 'border-red-500 focus:ring-red-200' 
                 : isValid 
@@ -58,7 +58,7 @@ const UrlInput = ({ onValidUrl, isLoading }) => {
             disabled={!isValid || isLoading}
             className={`absolute right-2 px-6 py-2.5 rounded-lg font-medium transition-all ${
               isValid && !isLoading
-                ? 'bg-red-600 hover:bg-red-700 text-white shadow-md'
+                ? 'bg-red-600 hover:bg-red-700 text-white'
                 : 'bg-gray-200 dark:bg-gray-700 text-gray-400 cursor-not-allowed'
             }`}
           >

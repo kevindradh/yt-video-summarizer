@@ -34,22 +34,23 @@ const HomePage = () => {
   return (
     <div className="min-h-screen w-full bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex flex-col items-center px-4 py-12 transition-colors">
       {/* Header */}
-      <header className="w-full max-w-5xl flex justify-between items-center mb-16">
-        <div className="flex items-center space-x-2 cursor-pointer" onClick={() => navigate('/')}>
-          <div className="bg-red-600 p-2 rounded-lg text-white shadow-sm">
-            <Play size={24} fill="currentColor" />
+      <header className="w-full max-w-5xl flex justify-between items-center mb-12 md:mb-16 gap-4">
+        <div className="flex items-center space-x-2 cursor-pointer flex-shrink-0" onClick={() => navigate('/')}>
+          <div className="bg-red-600 p-1.5 md:p-2 rounded-lg text-white">
+            <Play size={20} className="md:w-6 md:h-6" fill="currentColor" />
           </div>
-          <h1 className="text-xl font-bold tracking-tight">YouTube Summarizer</h1>
+          <h1 className="text-lg md:text-xl font-bold tracking-tight">YouTube Summarizer</h1>
         </div>
-        
-        <div className="flex items-center space-x-4">
+
+        <div className="flex items-center space-x-2 md:space-x-4">
           <ThemeToggle />
           <button 
             onClick={() => navigate('/history')}
-            className="flex items-center space-x-2 px-4 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg transition-colors"
+            className="flex items-center space-x-2 p-2 md:px-4 md:py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-lg transition-colors"
+            title="History"
           >
-            <History size={18} />
-            <span>History</span>
+            <History size={20} />
+            <span className="hidden md:inline">History</span>
           </button>
         </div>
       </header>
@@ -114,8 +115,8 @@ const HomePage = () => {
                 { step: '2', title: 'AI Memproses', desc: 'Kami mengambil transkrip dan memprosesnya menggunakan AI.' },
                 { step: '3', title: 'Dapatkan Hasil', desc: 'Baca ringkasan dan poin-poin kunci dalam hitungan detik.' },
               ].map((item) => (
-                <div key={item.step} className="p-8 bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-shadow">
-                  <div className="w-10 h-10 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-full flex items-center justify-center font-bold mb-4 mx-auto text-lg">
+                <div key={item.step} className="p-8 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 hover:border-red-200 dark:hover:border-red-900 transition-colors">
+                  <div className="w-10 h-10 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full flex items-center justify-center font-bold mb-4 mx-auto text-lg">
                     {item.step}
                   </div>
                   <h3 className="font-bold mb-2 text-lg">{item.title}</h3>

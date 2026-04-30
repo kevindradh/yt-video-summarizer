@@ -31,10 +31,10 @@ body {
   }
   
   .btn-toggle.active {
-    @apply bg-white dark:bg-gray-700 shadow-sm text-red-600 dark:text-red-400 font-medium;
+    @apply bg-white dark:bg-gray-700 text-red-600 dark:text-red-400 font-medium;
   }
 
   .card-container {
-    @apply bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700;
+    @apply bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700;
   }
 }

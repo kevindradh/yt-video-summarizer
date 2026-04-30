@@ -8,7 +8,7 @@ const ErrorAlert = ({ onRetry }) => {
   if (!error) return null;
 
   return (
-    <div className="w-full max-w-2xl mx-auto mt-12 p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl shadow-sm animate-in fade-in slide-in-from-top-4 duration-300">
+    <div className="w-full max-w-2xl mx-auto mt-12 p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg animate-in fade-in slide-in-from-top-4 duration-300">
       <div className="flex items-start space-x-4 text-left">
         <div className="flex-shrink-0">
           <XCircle className="w-6 h-6 text-red-600 dark:text-red-400" />
@@ -36,7 +36,7 @@ const ErrorAlert = ({ onRetry }) => {
             {error.retryable && (
               <button
                 onClick={onRetry}
-                className="flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors shadow-sm"
+                className="flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors"
               >
                 <RefreshCw className="w-4 h-4 mr-2" />
                 Coba Lagi
@@ -56,3 +56,4 @@ const ErrorAlert = ({ onRetry }) => {
 };
 
 export default ErrorAlert;
+;

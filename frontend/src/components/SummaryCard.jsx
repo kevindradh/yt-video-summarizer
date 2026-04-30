@@ -76,9 +76,9 @@ const SummaryCard = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto mt-12 mb-20 animate-in fade-in slide-in-from-bottom-4 duration-500 text-left">
+    <div className="w-full max-w-4xl mx-auto mt-12 mb-20 animate-in fade-in slide-in-from-bottom-4 duration-500 text-left px-4 md:px-0">
       {/* Video Metadata Card */}
-      <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700 flex flex-col md:flex-row">
+      <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 flex flex-col md:flex-row">
         <div className="md:w-1/3 relative group">
           <img 
             src={result.thumbnail} 
@@ -90,7 +90,7 @@ const SummaryCard = () => {
               href={`https://youtube.com/watch?v=${result.videoId}`} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="bg-red-600 text-white p-3 rounded-full transform group-hover:scale-110 transition-transform shadow-lg"
+              className="bg-gray-900/80 text-white p-3 rounded-full transform group-hover:scale-110 transition-transform"
             >
               <Play size={24} fill="currentColor" />
             </a>
@@ -107,11 +107,11 @@ const SummaryCard = () => {
           
           <div className="grid grid-cols-2 gap-4">
             <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
-              <User size={16} className="mr-2 text-red-500" />
+              <User size={16} className="mr-2 text-gray-400" />
               <span className="truncate">{result.channel}</span>
             </div>
             <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
-              <Calendar size={16} className="mr-2 text-red-500" />
+              <Calendar size={16} className="mr-2 text-gray-400" />
               <span>{new Date(result.publishedAt).toLocaleDateString('id-ID')}</span>
             </div>
           </div>
@@ -119,66 +119,62 @@ const SummaryCard = () => {
       </div>
 
       {/* Summary Content */}
-      <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="mt-8 space-y-8">
         {/* Main Summary */}
-        <div className="lg:col-span-2 space-y-8">
-          <section className="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center space-x-2">
-                <FileText className="text-red-600 w-5 h-5" />
-                <h4 className="text-lg font-bold text-gray-900 dark:text-white">Ringkasan Utama</h4>
-              </div>
-              
-              <div className="flex items-center space-x-2">
-                <button 
-                  onClick={handleCopy}
-                  className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors text-gray-500"
-                  title="Copy to clipboard"
-                >
-                  {copied ? <Check size={18} className="text-green-500" /> : <Copy size={18} />}
-                </button>
-                <button 
-                  onClick={handleDownloadPDF}
-                  className="flex items-center space-x-2 px-3 py-2 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/50 rounded-lg transition-colors text-sm font-medium"
-                  title="Download PDF"
-                >
-                  <FileDown size={18} />
-                  <span>Download PDF</span>
-                </button>
-              </div>
+        <section className="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-xl border border-gray-200 dark:border-gray-700">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <div className="flex items-center space-x-2">
+              <FileText className="text-gray-600 dark:text-gray-400 w-5 h-5" />
+              <h4 className="text-lg font-bold text-gray-900 dark:text-white">Ringkasan Utama</h4>
             </div>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line text-lg">
-              {result.summary}
-            </p>
-          </section>
-        </div>
+            
+            <div className="flex items-center space-x-2">
+              <button 
+                onClick={handleCopy}
+                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors text-gray-500"
+                title="Copy to clipboard"
+              >
+                {copied ? <Check size={18} className="text-green-500" /> : <Copy size={18} />}
+              </button>
+              <button 
+                onClick={handleDownloadPDF}
+                className="flex items-center space-x-2 px-3 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors text-sm font-medium border border-gray-200 dark:border-gray-600"
+                title="Download PDF"
+              >
+                <FileDown size={18} />
+                <span>Download PDF</span>
+              </button>
+            </div>
+          </div>
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line text-lg">
+            {result.summary}
+          </p>
+        </section>
 
-        {/* Key Points Sidebar */}
-        <div className="space-y-8">
-          <section className="bg-red-600 text-white p-8 rounded-3xl shadow-lg">
-            <div className="flex items-center space-x-2 mb-6">
-              <List className="w-5 h-5" />
-              <h4 className="text-lg font-bold">Poin Penting</h4>
-            </div>
-            <ul className="space-y-4">
-              {result.keyPoints.map((point, idx) => (
-                <li key={idx} className="flex items-start space-x-3 text-sm bg-white/10 p-3 rounded-xl backdrop-blur-sm border border-white/10 text-left">
-                  <span className="flex-shrink-0 w-6 h-6 bg-white text-red-600 rounded-full flex items-center justify-center font-bold text-xs">
-                    {idx + 1}
-                  </span>
-                  <p className="leading-snug">{point.point}</p>
-                </li>
-              ))}
-            </ul>
-          </section>
-          
-          <button
-            onClick={reset}
-            className="w-full py-4 bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-bold rounded-2xl transition-all flex items-center justify-center space-x-2"
-          >
-            <span>Ringkas Video Lain</span>
-          </button>
-        </div>
+        {/* Key Points Section */}
+        <section className="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-xl border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center space-x-2 mb-6">
+            <List className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+            <h4 className="text-lg font-bold text-gray-900 dark:text-white">Poin Penting</h4>
+          </div>
+          <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {result.keyPoints.map((point, idx) => (
+              <li key={idx} className="flex items-start space-x-3 text-sm bg-gray-50 dark:bg-gray-900/50 p-4 rounded-lg border border-gray-100 dark:border-gray-800 text-left">
+                <span className="flex-shrink-0 w-6 h-6 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full flex items-center justify-center font-bold text-xs">
+                  {idx + 1}
+                </span>
+                <p className="leading-relaxed text-gray-700 dark:text-gray-300">{point.point}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+        
+        <button
+          onClick={reset}
+          className="w-full py-4 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-bold rounded-lg transition-all flex items-center justify-center space-x-2 border border-gray-200 dark:border-gray-700"
+        >
+          <span>Ringkas Video Lain</span>
+        </button>
       </div>
     </div>
   );

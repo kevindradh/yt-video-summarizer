@@ -16,22 +16,24 @@ const HistoryPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex flex-col items-center px-4 py-12 transition-colors">
-      <header className="w-full max-w-4xl flex items-center justify-between mb-12">
-        <div className="flex items-center">
+      <header className="w-full max-w-4xl flex items-center justify-between mb-8 md:mb-12 gap-4">
+        <div className="flex items-center min-w-0">
           <button 
             onClick={() => navigate('/')}
-            className="p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full transition-colors mr-4"
+            className="p-2 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full transition-colors mr-2 md:mr-4 flex-shrink-0"
           >
             <ArrowLeft size={24} />
           </button>
-          <h1 className="text-2xl font-bold">Riwayat Ringkasan</h1>
+          <h1 className="text-xl md:text-2xl font-bold truncate">Riwayat Ringkasan</h1>
         </div>
-        <ThemeToggle />
+        <div className="flex-shrink-0">
+          <ThemeToggle />
+        </div>
       </header>
 
       <main className="w-full max-w-4xl">
         {history.length === 0 ? (
-          <div className="text-center py-20 bg-white dark:bg-gray-800 rounded-3xl border-2 border-dashed border-gray-200 dark:border-gray-700">
+          <div className="text-center py-20 bg-white dark:bg-gray-800 rounded-xl border-2 border-dashed border-gray-200 dark:border-gray-700">
             <Clock size={48} className="mx-auto text-gray-300 mb-4" />
             <p className="text-gray-500">Belum ada riwayat ringkasan.</p>
             <button 
@@ -46,45 +48,45 @@ const HistoryPage = () => {
             {history.map((item) => (
               <div 
                 key={item.videoId}
-                className="card-container p-4 flex items-center group hover:border-red-300 dark:hover:border-red-700 transition-all cursor-pointer"
+                className="card-container p-3 md:p-4 flex items-center group hover:border-red-300 dark:hover:border-red-700 transition-all cursor-pointer"
                 onClick={() => handleRevisit(item)}
               >
-                <div className="relative w-32 h-20 flex-shrink-0 rounded-xl overflow-hidden mr-6 shadow-sm">
+                <div className="relative w-24 h-14 md:w-32 md:h-20 flex-shrink-0 rounded-lg md:rounded-xl overflow-hidden mr-3 md:mr-6">
                   <img src={item.thumbnail} alt={item.title} className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-black/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Play size={20} className="text-white fill-white" />
+                    <Play size={16} className="text-white fill-white md:w-5 md:h-5" />
                   </div>
                 </div>
 
                 <div className="flex-1 min-w-0 text-left">
-                  <h3 className="font-bold text-lg line-clamp-1 group-hover:text-red-600 transition-colors">
+                  <h3 className="font-bold text-base md:text-lg line-clamp-1 group-hover:text-red-600 transition-colors">
                     {item.title}
                   </h3>
-                  <div className="flex items-center text-sm text-gray-500 space-x-4 mt-1">
-                    <span className="truncate max-w-[150px]">{item.channel}</span>
-                    <span>•</span>
+                  <div className="flex flex-wrap items-center text-xs md:text-sm text-gray-500 gap-x-2 md:gap-x-4 mt-0.5 md:mt-1">
+                    <span className="truncate max-w-[120px] md:max-w-[200px]">{item.channel}</span>
+                    <span className="hidden xs:inline">•</span>
                     <span>{new Date(item.processedAt).toLocaleDateString('id-ID')}</span>
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity ml-4">
+                <div className="flex items-center space-x-1 md:space-x-2 opacity-0 md:opacity-0 group-hover:opacity-100 transition-opacity ml-2 md:ml-4">
                   <button 
                     onClick={(e) => {
                       e.stopPropagation();
                       deleteFromHistory(item.videoId);
                     }}
-                    className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all"
+                    className="p-1.5 md:p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all"
                   >
-                    <Trash2 size={18} />
+                    <Trash2 size={16} className="md:w-[18px] md:h-[18px]" />
                   </button>
                   <a 
                     href={`https://youtube.com/watch?v=${item.videoId}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
-                    className="p-2 text-gray-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-all"
+                    className="p-1.5 md:p-2 text-gray-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-all"
                   >
-                    <ExternalLink size={18} />
+                    <ExternalLink size={16} className="md:w-[18px] md:h-[18px]" />
                   </a>
                 </div>
               </div>
